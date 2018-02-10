@@ -22,7 +22,7 @@ for file in FILES:
 				print(row.keys())
 				counter += 1
 
-				headers = ''.join([f'* {header}   ' for header in row.keys()])
+				headers = ''.join(['* {} \n   '.format(header) for header in row.keys()])
 				data = f"""# FILE 	{file}
 ## HEADERS 
 {headers}

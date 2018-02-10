@@ -1,6 +1,12 @@
 import csv 
+import os
+from pathlib import Path
 
-CSV_DIR = '../CSVS'
+CURRENT_PATH = os.getcwd()
+
+CSV_DIR = 'csvs'
+MARKDOWN_DIR = 'markdowns'
+
 FILES = [
 	'herpetology_seasnakes',
 	'ichthyology_marine_collections',
@@ -8,14 +14,16 @@ FILES = [
 	'ornithology_specimens_aquatic_localities',
 	'clean_dataset_iz',
 	'dirty_dataset_iz'
-
 ]
 
 
 for file in FILES:
-	headers = [];
+	
+	p = Path(CURRENT_PATH)
+	csv_folder = p / '..' / CSV_DIR
+	markdown_folder = p / '..' / MARKDOWN_DIR
 
-	with open(f'{file}.csv') as f:
+	with open(f'{csv_folder}/{file}.csv') as f:
 		reader = csv.DictReader(f)
 		
 		counter = 0
@@ -30,7 +38,7 @@ for file in FILES:
 {headers}
 """
 
-				with open(f'{file}.md', 'w+') as readme:
+				with open(f'{markdown_folder}/{file}.md', 'w+') as readme:
 					readme.write(data)
 
 

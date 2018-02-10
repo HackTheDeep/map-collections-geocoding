@@ -24,9 +24,9 @@ for file in FILES:
 
 				headers = ''.join([f'* {header}   ' for header in row.keys()])
 				data = f"""# FILE 	{file}
-				 ## HEADERS 
-				 {headers}
-				"""
+## HEADERS 
+{headers}
+"""
 
 				with open(f'{file}.md', 'w+') as readme:
 					readme.write(data)

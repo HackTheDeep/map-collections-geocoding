@@ -23,7 +23,9 @@ for file in FILES:
 				counter += 1
 
 				headers = ''.join([f'* {header}   ' for header in row.keys()])
-				data = f"""# FILE 	{file} ## HEADERS {headers}
+				data = f"""# FILE 	{file}
+				 ## HEADERS 
+				 {headers}
 				"""
 
 				with open(f'{file}.md', 'w+') as readme:

@@ -1,5 +1,6 @@
 import csv 
 
+CSV_DIR = '../CSVS'
 FILES = [
 	'herpetology_seasnakes',
 	'ichthyology_marine_collections',
@@ -11,6 +12,10 @@ FILES = [
 
 for file in FILES:
 	headers = [];
+
+	with open(f'{file}.csv') as f:
+		reader = csv.DictReader(f)
+		print(reader)
 
 
 

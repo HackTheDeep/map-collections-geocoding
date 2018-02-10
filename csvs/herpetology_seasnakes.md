@@ -1,0 +1,10 @@
+
+					# FILE 
+					
+					herpetology_seasnakes 
+
+
+					## HEADERS 
+
+					* EMu Catalog IRN   * CatPrefix   * CatNumber   * CatSuffix   * BioParticipantString   * BioDateVisitedFrom   * BioDateVisitedTo   * ClaOrder   * ClaFamily   * ClaGenus   * ClaSpecies   * ClaSubspecies   * EMU Localities IRN   * AquBottomDepthFromMet   * AquBottomDepthToMet   * AquDepthFromMet   * AquDepthToMet   * AquDistanceFromShoreMet   * AquDistanceFromShoreToMet   * DraDrainage   * DraDrainageSeaGulf   * DraPrimaryTributary   * DraQuaternaryTributary   * DraRiverBasin   * DraSecondaryTributary   * DraTertiaryTributary   * LatDeriveCentroid_tab   * LatPreferred_tab   * LocArchipelago   * LocBaySound   * LocContinent   * LocContinentalShelfRegion   * LocCountry   * LocDistrictCountyShire   * LocIslandGrouping   * LocIslandName   * LocNearestNamedPlace   * LocNoFurtherLocalityData   * LocOcean   * LocPreciseLocation   * LocProvinceStateTerritory   * LocSeaGulf   * LocSiteName_tab   * LocTownship   * TerElevationFromMet   * TerElevationToMet   * TerVerbatimElevation   * LatPreferredCentroidLatDec   * LatPreferredCentroidLongDec   
+				

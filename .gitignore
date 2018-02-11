@@ -1,2 +1,3 @@
 venv
 .pydevproject
+.DS_Store

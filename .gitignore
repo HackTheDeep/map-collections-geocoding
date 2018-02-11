@@ -1,0 +1,7 @@
+node_modules/
+
+# don't track osx turds
+.DS_Store
+
+*.swo
+*.swp

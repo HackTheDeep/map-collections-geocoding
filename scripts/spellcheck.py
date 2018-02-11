@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
-# Read dirty data csv files print lists of data from columns you're interested in
-# In this case location related ones
+# Read dirty location data and attempt to make corrections within 1 edit distance
 #
 # NOTE this is assuming UTF-8 encoded files
 

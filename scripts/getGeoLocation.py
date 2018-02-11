@@ -17,6 +17,11 @@ def getLatLon(locationString, geoCodeKey='oceanocoders', googleKey='AIzaSyA3k5Sp
 	if(g.lat is None):
 		gmaps = googlemaps.Client(key=googleKey)
 		result = gmaps.geocode(locationString)
-		return result[0]['geometry']['location']
+		if(len(result)>0):
+			retVal = result[0]['geometry']['location']
+			retVal.update({"found":True})
+			return retVal
+		else:
+			return {"found":False}
 	else:
-		return {'lat':g.lat,'lng':g.lng}
+		return {'lat':g.lat,'lng':g.lng,"found":True}

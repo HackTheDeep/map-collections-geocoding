@@ -12,7 +12,7 @@ CSV_DIR = 'csvs'
 MARKDOWN_DIR = 'markdowns'
 
 FILES = [
-    'clean_dataset_iz_test_out.csv'
+    'dirty_dataset_iz_latlong_out'
 ]
 
 url="http://hackthedeep.liweb.group/dirtydata/"
@@ -20,9 +20,10 @@ url="http://hackthedeep.liweb.group/dirtydata/"
 def upload(row):
     print(row)
     update={"clean_latitude":row["Lat"],"clean_longitude":row["Lng"]}
-    r=requests.put(url+row["Tracking Number"], data=update)
-    print(r.text)
-    print("uploaded")
+    if(row["Lat"] is not None or row["Lng"] is not None):
+        r=requests.put(url+row["Tracking Number"], data=update)
+        print(r.text)
+        print("uploaded")
 
 for file in FILES:
 

@@ -44,6 +44,8 @@ def query_map_api(row_dict):
         if key in row_dict and len(row_dict[key]):
             locations.append(row_dict[key])
     print(locations)
+    if not len(locations):
+        return [tracking_number, '', '']
     if ','.join(locations) in location_cache:
         return [tracking_number] + location_cache[','.join(locations)]
     locations_arrays = build_locations_arrays(locations)
@@ -52,8 +54,9 @@ def query_map_api(row_dict):
         i += 1
         if not found:
             print(','.join(locations_array))
-            result = getLatLon(','.join(locations_array))
-            lat = result['lat']; lon = result['lng']; found = result['found']
+            if len(locations_array):
+                result = getLatLon(','.join(locations_array))
+                lat = result['lat']; lon = result['lng']; found = result['found']
         if found:
             location_cache[','.join(locations)] = [lat, lon]
             return [tracking_number, lat, lon]

@@ -44,17 +44,17 @@ def query_map_api(row_dict):
         i += 1
         if not found:
             result = getLatLon(','.join(locations_array))
-            lat = result['lat']; lon = result['lon']; found = result['found']
+            lat = result['lat']; lon = result['lng']; found = result['found']
         if found:
-            locations_cache[','.join(locations)] = [lat, lon]
+            location_cache[','.join(locations)] = [lat, lon]
             return [tracking_number, lat, lon]
         if i > 20:
             return [tracking_number, '', '']
 
-with open(os.path.join(csv_pth, fname)) as csvfile:
-    reader = csv.DictReader(csvfile)
-    for row in reader:
-        query_map_api(row)
+#with open(os.path.join(csv_pth, fname)) as csvfile:
+#    reader = csv.DictReader(csvfile)
+#    for row in reader:
+#        query_map_api(row)
 
 
 

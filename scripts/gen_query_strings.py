@@ -11,8 +11,10 @@ from itertools import combinations
 #                     'Island Group', 'Lake / Pond / Reservoir', 'Ocean', 'Specific Locale', 'River/Creek',
 #                     'Sea / Gulf / Strait', 'Stream', 'City / Town / Hamlet']
 
-location_fields_1 = ['Island', 'City/Town/Hamlet', 'Stream', 'River/Creek', 'Lake/Pond/Reservoir', 'Island Group', 'Bay/Harbor', 'Department / Province / State', \
-                     'Country', 'Sea/Gulf/Strait', 'Ocean']
+location_fields_1 = ['Island', 'LocIslandName', 'City/Town/Hamlet', 'LocTownship', 'Stream', 'River/Creek',
+                     'DraRiverBasin' 'Lake/Pond/Reservoir', 'LocIslandGrouping', 'Island Group', \
+                     'Bay/Harbor', 'Loc/Bay/Sound' 'Department / Province / State', 'LocProvinceStateTerritory', \
+                     'Country', 'Sea/Gulf/Strait', 'LocSeaGulf', 'LocOcean', 'Ocean']
 
 location_cache = {}
 
@@ -34,8 +36,14 @@ def build_locations_arrays(locations):
 
 def query_map_api(row_dict):
     tracking_number = row_dict['Tracking Number']
-    found = None
-    locations = [row_dict[key] for key in location_fields_1 if len(row_dict[key]) > 1]
+    found = False
+    #locations = [row_dict[key] for key in location_fields_1 if key in row_dict and len(row_dict[key]) > 1]
+    locations = []
+    print(row_dict)
+    for key in location_fields_1:
+        if key in row_dict and len(row_dict[key]):
+            locations.append(row_dict[key])
+    print(locations)
     if ','.join(locations) in location_cache:
         return [tracking_number] + location_cache[','.join(locations)]
     locations_arrays = build_locations_arrays(locations)
@@ -43,6 +51,7 @@ def query_map_api(row_dict):
     for locations_array in locations_arrays:
         i += 1
         if not found:
+            print(','.join(locations_array))
             result = getLatLon(','.join(locations_array))
             lat = result['lat']; lon = result['lng']; found = result['found']
         if found:

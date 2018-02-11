@@ -1,0 +1,15 @@
+   12680 ./locales_unique.csv
+     539 ./continents_unique.csv
+       0 ./cities_unique.csv
+   72084 ./countries.csv
+   50135 ./continents.csv
+   48872 ./counties.csv
+       0 ./cities.csv
+   27940 ./locales.csv
+    1606 ./countries_unique.csv
+       0 ./oceans_unique.csv
+   65626 ./states.csv
+       0 ./oceans.csv
+    7898 ./states_unique.csv
+   12775 ./counties_unique.csv
+  300155 total

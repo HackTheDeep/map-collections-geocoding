@@ -32,11 +32,13 @@ for file in FILES:
 	print("found that {} tracking numbers were already written".format(len(completedTracking)))
 	found_already_written=0
 	wrote_to_file=0
-	with open('{}/{}.csv'.format(csv_folder,file), "r") as f:
-		writeFile = open('{}/{}.csv'.format(csv_folder,file+"_out.csv"), "w")
+	with open('{}/{}.csv'.format(csv_folder,file), "r",newline="", encoding="utf-8") as f:
+		writeFile = open('{}/{}.csv'.format(csv_folder,file+"_out.csv"), "a")
 		writeFieldnames=["Tracking Number","Lat","Lng"]
 		writer = csv.DictWriter(writeFile, delimiter=',', fieldnames=writeFieldnames)
-		writer.writeheader()
+		if(len(completedTracking)==0):
+			writer.writeheader()
+			
 		reader = csv.DictReader(f)
 		for row in reader:
 			#For each CSV row

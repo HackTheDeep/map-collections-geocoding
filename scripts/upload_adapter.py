@@ -12,7 +12,7 @@ CSV_DIR = 'csvs'
 MARKDOWN_DIR = 'markdowns'
 
 FILES = [
-    'clean_dataset_iz_test_out.csv'
+    'dirty_dataset_iz_latlong_out'
 ]
 
 url="http://hackthedeep.liweb.group/dirtydata/"

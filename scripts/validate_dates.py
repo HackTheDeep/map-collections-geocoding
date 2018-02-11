@@ -39,14 +39,14 @@ for file in FILES:
                     dt = parser.parse(date)
                     filled_counter = index + 1
                 except ValueError:
-                    failed_rows.append({'row':index +1, 'content_date': date})
+                    failed_rows.append({'Tracking Number':row['Tracking Number'], 'content_date': date})
 
 
             total_rows += 1
 
         with open(f'{csv_folder}/unformattable_dates.csv', 'w', newline='') as dates:
         
-            fieldnames = ['row', 'content_date']
+            fieldnames = ['Tracking Number', 'content_date']
             writer = csv.DictWriter(dates, fieldnames=fieldnames)
 
             writer.writeheader()

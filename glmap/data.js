@@ -1,11 +1,17 @@
 let csv = require('csv');
 let fs = require('fs');
 let request = require('superagent');
+let moment = require('moment');
+let _ = require('lodash');
+
+let parsedms = require('./parsedms.js');
+
+
 
 console.log("\nMAP THE COLLECTIONS go go geocoder");
 console.log("==================================\n\n");
 
-let cleanDatasetFile = './csvs/test100.csv';
+let cleanDatasetFile = '../csvs/clean_dataset_iz.csv';
 
 let data = fs.readFileSync(cleanDatasetFile);
 
@@ -18,17 +24,8 @@ let makeTableName = function(str) {
   return str.replace(/\W+/gi, '');
 }
 
-let desiredColumns = {
-  'CatalogNumber': 'text',
-  'AMNHAccNumber': 'text',
-  'Class'        : 'text',
-  'Subclass'     : 'text',
-  'Latitude'     : 'double',
-  'Longitude'    : 'double'
-};
 
-let x = 0;
-csv.parse(data, (err, data) => {
+csv.parse(data, { columns: true }, (err, data) => {
   if (err) {
     throw new Error(err);
   }
@@ -37,11 +34,40 @@ csv.parse(data, (err, data) => {
 
   console.log("Analyzing CSV file...");
 
-  let headers = data[0];
-  headers.forEach((header, idx) => {
-    console.log([idx, header, makeTableName(header)].join(' '));
+  //console.log(data[0]);
+
+  //console.log(data);
+
+  let mapped = data.map(item => {
+    let LL = {
+      decimal: isNaN(parseFloat(item['decimal latitude'])) || isNaN(parseFloat(item['decimal longitude']))
+        ? false
+        : [item['decimal latitude'], item['decimal longitude']],
+      degFrom: [
+        parsedms.parse(item['Latitude (from)'],  item['Lat (from) NS']),
+        parsedms.parse(item['Longitude (from)'], item['Long (from) EW'])
+      ],
+      degTo: [
+        parsedms.parse(item['Latitude (to)'], item['Lat NS  (to)']),
+        parsedms.parse(item['Longitude   (to) '], item['Long EW  (to)'])
+      ]
+    };
+
+    if (LL.degFrom[0] === null || LL.degFrom[1] === null) {
+      LL.degFrom = null;
+    }
+    if (LL.degTo[0] === null || LL.degTo[1] === null) {
+      LL.degTo = null;
+    }
+    if (LL.degFrom) {
+      console.log(LL);
+    }
+  
+    return LL;
   });
 
+
+  /*
   let uniqueNames = new Set();
 
   data.forEach((item, idx) => {

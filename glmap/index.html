@@ -1,0 +1,98 @@
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/3.8.2/superagent.js"></script>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.0/mapbox-gl.css' rel='stylesheet' />
+  <style>
+    body { margin:0; padding:0; }
+    #map { position:absolute; top:0; bottom:0; width:100%; }
+    .mapboxgl-popup-content .participant { color: red; }
+    .mapboxgl-popup-content .date { color: blue; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script>
+
+    const circle_paint = {
+      'circle-radius': 6,
+      // color circles using a match expression
+      // https://www.mapbox.com/mapbox-gl-js/style-spec/#expressions-match
+      'circle-color': [
+        'match',
+        ['get', 'decade'],
+        '186', '#FF0000', //red
+        '187', '#FF3300',
+        '188', '#FF6600',
+        '189', '#FF9900',
+        '190', '#FFCC00',
+        '191', '#FFFF00', //yellow
+        '192', '#99FF00',
+        '193', '#66FF00',
+        '194', '#33FF00',
+        '195', '#00FF00', // green
+        '196', '#00FF33',
+        '197', '#00FF66',
+        '198', '#00FF99',
+        '199', '#00FFCC',
+        '200', '#00FFFF', // cyan
+        '201', '#66FFFF',
+        /* other */ '#ccc'
+      ]
+    };
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYmd1biIsImEiOiJlRTVXbENBIn0.tVaSmhr0MXPtu8hdktMl3g';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/bgun/cjdicl1u037if2st0dmi8vg4u',
+      center: [-96, 37.8],
+      zoom: 3
+    }); 
+
+    map.on('load', function() {
+
+      superagent.get('https://raw.githubusercontent.com/HackTheDeep/map-collections-geocoding/master/make-pipeline/ornithology.geojson')
+        .then(function(resp) {
+
+          let stuff = JSON.parse(resp.text);
+          console.log(stuff);
+
+          stuff.features = stuff.features.map(f => {
+            if(f.properties.bio_date_visited_from && f.properties.bio_date_visited_from.split(' ').length === 3) {
+              f.properties.decade = f.properties.bio_date_visited_from.split(' ')[2].substr(0,3);
+              //console.log(f.decade);
+            }
+            return f;
+          });
+
+          map.addLayer({
+            "id": "points",
+            "type": "circle",
+            "source": {
+              "type": "geojson",
+              "data": stuff
+            },
+            "paint": circle_paint 
+          });
+      });
+    });
+
+    map.on('click', function(e) {
+      var features = map.queryRenderedFeatures(e.point);
+      console.log(features);
+      if (features.length && features[0].layer.id === "points") {
+        let f = features[0];
+        new mapboxgl.Popup()
+          .setLngLat(f.geometry.coordinates)
+          .setHTML([
+            "<div class='participant'><i>Participant:</i> "+f.properties.bio_participant+"</div>",
+            "<div class='date'><i>Date:</i> "+f.properties.bio_date_visited_from+"</div>"
+          ].join('\n'))
+          .addTo(map);
+      } else {
+        console.warn("no features found");
+      }
+    });
+  </script>
+</body>
+</html>

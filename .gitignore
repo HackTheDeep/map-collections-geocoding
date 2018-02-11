@@ -1,4 +1,14 @@
+*.swo
+*.swp
+*.log
+
+# python stuff
 venv
 .pydevproject
 .project
+
+# node stuff
+node_modules/
+
+# don't track osx turds
 .DS_Store

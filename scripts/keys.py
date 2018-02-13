@@ -1,3 +1,3 @@
-googleKey='***REMOVED***'
-geoCodeKey='***REMOVED***'
-bingKey='***REMOVED***'
+googleKey='AIzaSyA3k5SpAOOdB0Bw92ZYcHDb6GTzxlJvMBg'
+geoCodeKey='oceanocoders'
+bingKey='AjEl9PcIPe1ZAyZfPf2fdpIy8vTMI02tNGE61HUs1-LtOKV_Zs6R93UThhEp9Bhw'

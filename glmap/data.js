@@ -110,7 +110,7 @@ csv.parse(data, { columns: true }, (err, data) => {
 
 
 /*
-request.get("http://api.geonames.org/searchJSON?q=solomon%20islands&username=***REMOVED***&format=json")
+request.get("http://api.geonames.org/searchJSON?q=solomon%20islands&username=oceanocoders&format=json")
   .then(resp => {
     console.log(resp.body);
   });

@@ -2,6 +2,7 @@ import requests
 import csv
 import os
 import os.path
+import time
 from collections import OrderedDict
 
 from pathlib import Path
@@ -20,10 +21,18 @@ url="http://hackthedeep.liweb.group/dirtydata/"
 def upload(row):
     print(row)
     update={"clean_latitude":row["Lat"],"clean_longitude":row["Lng"]}
-    if(row["Lat"] is not None or row["Lng"] is not None):
-        r=requests.put(url+row["Tracking Number"], data=update)
-        print(r.text)
-        print("uploaded")
+    if( (row["Lat"] is not None and row["Lat"]!="") or (row["Lng"] is not None and ["Lng"]!="")):
+        #Check to see if it's already there.
+        r=requests.get(url+row["Tracking Number"])
+        if(r.json()["CleanLatitude"] is not None and r.json()["CleanLatitude"]!=""):
+            r=requests.put(url+row["Tracking Number"], data=update)
+            print(r.text)
+            print("uploaded")
+            time.sleep(5)
+        else:
+            print("Did not update because already found")
+    else:
+        print("Did not update because nothing to update")
 
 for file in FILES:
 
@@ -35,4 +44,8 @@ for file in FILES:
     with open('{}/{}.csv'.format(csv_folder,file), "r",newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            upload(row)
+            try:
+                upload(row)
+            except:
+                print("did not update")
+                print(row)

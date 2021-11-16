@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/HackTheDeep/map-collections-geocoding#readme",
   "dependencies": {
-    "aws-sdk": "^2.192.0",
+    "aws-sdk": "^2.814.0",
     "csv": "^2.0.0",
     "lodash": "^4.17.5",
     "mapbox": "^1.0.0-beta9",
